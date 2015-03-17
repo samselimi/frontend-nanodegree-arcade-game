@@ -1,8 +1,8 @@
 var Enemy = function(x, y) {
     this.sprite = 'images/enemy-bug.png';
-    this.x = x;
+    //Set new variables to be used throughout code.
+    this.x = x; 
     this.y = y;
-
     this.collisionBox = 70;
     this.minX = 40;
     this.maxX = 300;
@@ -13,16 +13,17 @@ Enemy.prototype.update = function(dt) {
       this.x = this.x + 140 * dt;
     }
     else {
-      var ranNum = Math.floor(Math.random() * (this.maxX - this.minX)) + this.minX;
+      //setup random number var
+      var ranNum = Math.floor(Math.random() * (this.maxX - this.minX)) + this.minX; //http://www.w3schools.com/jsref/jsref_random.asp
       var negLaneStartX = Math.abs(ranNum) * -1;
       this.x = negLaneStartX;
     }
 };
 
-
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
 
 var Player = function() {
     this.sprite = 'images/char-boy.png';
@@ -44,7 +45,7 @@ var Player = function() {
 Player.prototype.update = function() {
 
   allEnemies.forEach(function(enemy) {
-    if (enemy.y == player.y) {
+    if (enemy.y === player.y) {
       if (enemy.x <= (player.x + enemy.collisionBox) && enemy.x >= (player.x - enemy.collisionBox) ) {
         player.x = player.startx;
         player.y = player.starty;
@@ -58,31 +59,31 @@ Player.prototype.render = function() {
     
   //Display Score
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  ctx.fillStyle = '#ADFF2F';
-  ctx.font = 'italic bold 85px arial';
-  ctx.textBaseline = 'bottom';
-  ctx.fillText(player.score, 422, 140);
+  ctx.fillStyle = '#ADFF2F'; //chose a greenish color to show the score
+  ctx.font = 'italic bold 85px arial'; // here I set the font size and type
+  ctx.textBaseline = 'bottom'; //css to align the text where i wanted it
+  ctx.fillText(player.score, 422, 140); //coordinates of where I wanted text
     
   //Display Lives
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  ctx.fillStyle = '#FF0000';
+  ctx.fillStyle = '#FF0000'; //here I chose a red color to show the score
   ctx.font = 'italic bold 85px arial';
   ctx.fillText(player.lives, 27, 140);
     
   //Alert if you Win
-  if (player.score === 3) {
+  if (player.score === 3) { //if you make it to the top 3 times durring the game you win
   alert("You Win!");
-  location.reload();
+  location.reload(); //after the popup telling  you that you won the game will restart.
   }
 
 };
 
 Player.prototype.handleInput = function(keys) {
   
-  //Alert if you Lose
-  if (player.lives === 0) {
+  //Here you will get an alert if you Lose
+  if (player.lives === 0) { //if player lives get down to 0 from 3 you lose.
   alert("Game Over");
-  location.reload();
+  location.reload(); //Reloads Game
   }
 
     function validMoveX(move) {
@@ -127,7 +128,6 @@ Player.prototype.handleInput = function(keys) {
     else {
       console.log("No Move or Incorrect Key");
     }
-    //alert("Valid check X " + this.x + ", Y " + this.y);
     console.log("Valid check X " + this.x + ", Y " + this.y);
 };
 
